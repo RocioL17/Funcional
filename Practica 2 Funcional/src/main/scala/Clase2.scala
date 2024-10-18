@@ -6,57 +6,32 @@ object Clase2 {
    * Buscar
    * Dada una lista y una función de comparación, devuelve el valor que cumple la condición.
    */
-  // def buscar(lista: List[Int], com: (Int, Int) => Boolean): List[Int] = lista match
-  //   case head::Nil => head
-  //   case head::tail => if (com(head, buscar(tail, com))) head else buscar(tail, com)
+  def buscar(lista: List[Int], com: (Int, Int) => Boolean): Int = lista match
+    case Nil => 0
+    case head::Nil => head
+    case head::tail => if (com(head, buscar(tail, com))) head else buscar(tail, com)
   
 
   /*
    * Busca el Maximo
    */
-  def max(lista: List[Int]): Int = {
-    def auxMax(a: Int, valor: Int): Int = {
-      if(a >= lista.length) valor
-      else if(valor > lista(a)) auxMax(a + 1, valor)
-      else auxMax(a + 1, lista(a))
-    }
-    if (lista.length == 0) 0
-    else auxMax(0, lista(0))
-  }
+  def max(lista: List[Int]): Int = buscar(lista, _>_)
 
   /*
    * Busca el minimo
    */
-  def min(lista: List[Int]): Int = {
-    def auxMin(a: Int, valor: Int): Int = {
-      if(a >= lista.length) valor
-      else if(valor < lista(a)) auxMin(a + 1, valor)
-      else auxMin(a + 1, lista(a))
-    }
-    if (lista.length == 0) 0
-    else auxMin(0, lista(0))
-  }
+  def min(lista: List[Int]): Int = buscar(lista, _<_)
 
   // filtra la lista de valores mayores que el valor e pasado por parametro
   def maximos(lista: List[Int], e: Int): List[Int] = {
-    def auxMax(a: Int, valor: List[Int]): List[Int] = {
-      if(a >= lista.length) valor
-      else if (lista(a) > e) auxMax(a + 1, valor :+ lista(a)) //con este operador, :+, agrego un elemento al final de la lista
-      else auxMax(a + 1, lista)
-    }
     if (lista.length == 0) Nil // aca Nil es como hacemos una lista vacia en Scala :)
-    else auxMax(0, Nil)
+    else filtrar(lista, _ > e)
   }
 
   // filtra la lista de valores menores que el valor e pasado por parametro
   def minimos(lista: List[Int], e: Int): List[Int] = {
-    def auxMax(a: Int, valor: List[Int]): List[Int] = {
-      if(a >= lista.length) valor
-      else if (lista(a) < e) auxMax(a + 1, valor :+ lista(a)) //con este operador, :+, agrego un elemento al final de la lista
-      else auxMax(a + 1, lista)
-    }
     if (lista.length == 0) Nil // aca Nil es como hacemos una lista vacia en Scala :)
-    else auxMax(0, Nil)
+    else filtrar(lista, _ < e)
   }
 
   // Ordena los valores de una lista utilizando quicksort
