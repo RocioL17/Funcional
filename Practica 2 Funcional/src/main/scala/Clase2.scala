@@ -35,27 +35,29 @@ object Clase2 {
   }
 
   // Ordena los valores de una lista utilizando quicksort
-
-  def QuickSort(xs: List[Int]): List[Int] = {
-    if(xs.length < 2) xs
-    else minimos(xs.tail, xs.head) ++ (xs.tail ++ maximos(xs.tail, xs.head))
-  }
-  //Homenaje a mi primer quicksort en scala
+  //con esta forma tengo un problema con los números repetidos, sucede que no puedo
+  //hacer menor/mayor o igual, porque ambos filtros me van a devolver dos veces un mismo numero, si el head se repite.
   // def QuickSort(xs: List[Int]): List[Int] = {
-  //   def auxSort(min: List[Int], max: List[Int], medio: Int, pos: Int): List[Int] = {
-  //     if (pos >= xs.length) QuickSort(min) ++ (medio :: QuickSort(max))
-  //     else if (xs(pos) >= medio) auxSort(min, max :+ xs(pos), medio, pos + 1)
-  //     else auxSort(min :+ xs(pos), max, medio, pos + 1)
-  //   }
-  //   if (xs.isEmpty) Nil
-  //   else if (xs.length == 1) xs
-  //   else auxSort(Nil, Nil, xs(0), 1)
+  //   if(xs.length < 2) xs
+  //   else minimos(xs.tail, xs.head) ++ (xs.head :: maximos(xs.tail, xs.head))
   // }
+
+  //Homenaje a mi primer quicksort en scala
+  def QuickSort(xs: List[Int]): List[Int] = {
+    def auxSort(min: List[Int], max: List[Int], medio: Int, pos: Int): List[Int] = {
+      if (pos >= xs.length) QuickSort(min) ++ (medio :: QuickSort(max))
+      else if (xs(pos) >= medio) auxSort(min, max :+ xs(pos), medio, pos + 1)
+      else auxSort(min :+ xs(pos), max, medio, pos + 1)
+    }
+    if (xs.isEmpty) Nil
+    else if (xs.length == 1) xs
+    else auxSort(Nil, Nil, xs(0), 1)
+  }
 
   /**Obtiene un elemento en la posición n */
   def ObtenerElemento(lista: List[Int], posicion: Int): Int = {
-    if (posicion > lista.length) 0
-    else lista(posicion)
+    if(posicion == 0) lista.head
+    else ObtenerElemento(lista.tail, posicion - 1) // de forma recursivaa
   }
 
   /**
@@ -76,14 +78,25 @@ object Clase2 {
    * Cuenta los elementos
    * Si bien puedo usar length, lo hago recursivamente para practicar
    */
+  // contar recursivo
   def contar(lista: List[Int]): Int = {
-    def auxContar(a: Int, valor: Int): Int = {
-      if (a >= lista.length) valor
-      else auxContar(a + 1, valor + 1)
-    }
-    if(lista.isEmpty) 0
-    else auxContar(0, 0)
+    if (lista.isEmpty) 0
+    else contar(lista.tail) + 1
   }
+
+  def contarConCola(lista: List[Int], c: Int): Int = {
+    if (lista.isEmpty) c 
+    else contarConCola(lista, c + 1)
+  }
+
+  // def contar(lista: List[Int]): Int = {
+  //   def auxContar(a: Int, valor: Int): Int = {
+  //     if (a >= lista.length) valor
+  //     else auxContar(a + 1, valor + 1)
+  //   }
+  //   if(lista.isEmpty) 0
+  //   else auxContar(0, 0)
+  // }
 
   // Acumula los elementos
   def acc(lista: List[Int]): Int = {
