@@ -4,7 +4,7 @@ val lista = 1::2::3::4::Nil
 
 def foldAux[T](l: List[T], fx : (T, T) => T, init: U) : T = l match {
     case Nil => T
-    case head::tail => foldAux(tail, fx, fx(init, head)))
+    case head::tail => foldAux(tail, fx, fx(init, head))
 }
 
 //lambda recibe dos parámetros y los suma

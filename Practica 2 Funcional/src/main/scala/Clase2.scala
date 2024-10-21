@@ -24,13 +24,13 @@ object Clase2 {
 
   // filtra la lista de valores mayores que el valor e pasado por parametro
   def maximos(lista: List[Int], e: Int): List[Int] = {
-    if (lista.length == 0) Nil // aca Nil es como hacemos una lista vacia en Scala :)
+    if (lista.isEmpty) Nil // aca Nil es como hacemos una lista vacia en Scala :)
     else filtrar(lista, _ > e)
   }
 
   // filtra la lista de valores menores que el valor e pasado por parametro
   def minimos(lista: List[Int], e: Int): List[Int] = {
-    if (lista.length == 0) Nil // aca Nil es como hacemos una lista vacia en Scala :)
+    if (lista.isEmpty) Nil // aca Nil es como hacemos una lista vacia en Scala :)
     else filtrar(lista, _ < e)
   }
 
@@ -41,7 +41,7 @@ object Clase2 {
       else if (xs(pos) >= medio) auxSort(min, max :+ xs(pos), medio, pos + 1)
       else auxSort(min :+ xs(pos), max, medio, pos + 1)
     }
-    if (xs.length == 0) Nil
+    if (xs.isEmpty) Nil
     else if (xs.length == 1) xs
     else auxSort(Nil, Nil, xs(0), 1)
   }
@@ -62,7 +62,7 @@ object Clase2 {
       if(l.length % 2 == 0) (((l.length/2) + (l.length/2)+1) / 2).toInt
       else l(l.length/2)
     }
-    if (lista.length == 0) 0
+    if (lista.isEmpty) 0
     else auxMediana(QuickSort(lista)) //aca use la función sorted para ordenar, UPDATE: USE MI FUNCIÓN.
   }
 
@@ -75,7 +75,7 @@ object Clase2 {
       if (a >= lista.length) valor
       else auxContar(a + 1, valor + 1)
     }
-    if(lista.length == 0) 0
+    if(lista.isEmpty) 0
     else auxContar(0, 0)
   }
 
@@ -85,7 +85,7 @@ object Clase2 {
       if (a >= lista.length) valor
       else auxAcc(a + 1, valor + lista(a))
     }
-    if(lista.length == 0) 0
+    if(lista.isEmpty) 0
     else auxAcc(0, 0)
   }
 
@@ -98,7 +98,7 @@ object Clase2 {
       else if (p(xs(pos))) auxFiltrar(pos + 1, nueva :+ xs(pos))
       else auxFiltrar(pos + 1, nueva)
     }
-    if (xs.length == 0) Nil
+    if (xs.isEmpty) Nil
     else auxFiltrar(0, Nil)
   }
 
@@ -124,7 +124,7 @@ object Clase2 {
       if (pos >= lista.length) valor
       else auxAcumular(pos + 1, (valor + fx(lista(pos))))
     }
-    if (lista.length == 0) 0
+    if (lista.isEmpty) 0
     else auxAcumular(0, 0)
   }
 
@@ -154,7 +154,7 @@ object Clase2 {
    * Une 2 listas pasada por parametros
    */
   def unir(lista: List[Int], otraLista: List[Int]): List[Int] = {
-    if(lista.length == 0) otraLista
+    if(lista.isEmpty) otraLista
     else if (otraLista.length == 0) lista
     else lista ++ otraLista
   }
@@ -167,7 +167,7 @@ object Clase2 {
       if (pos >= lista.length) nueva
       else auxTransformar(pos + 1, (nueva :+ fx(lista(pos))))
     }
-    if (lista.length == 0) Nil
+    if (lista.isEmpty) Nil
     else auxTransformar(0, Nil)
   }
 
@@ -180,7 +180,7 @@ object Clase2 {
       else if (lista(pos) == nro) true
       else auxExiste(pos + 1)
     }
-    if (lista.length == 0) false
+    if (lista.isEmpty) false
     else auxExiste(0)
   }
 
@@ -189,13 +189,13 @@ object Clase2 {
    */
   def unirOfSet(lista: List[Int], otraLista: List[Int]): List[Int] = {
     def auxIgnorarRepetidos(resto: List[Int], nueva: List[Int]): List[Int] = {
-      if (resto.length == 0) nueva
+      if (resto.isEmpty) nueva
       else if (estaEnLista(nueva, resto.head)) auxIgnorarRepetidos(resto.tail, nueva) //Notas: En Scala, head es el primer elemento, y tail es el resto
       else auxIgnorarRepetidos(resto.tail, nueva :+ resto.head)
     }
 
     def estaEnLista(lista: List[Int], elemento: Int): Boolean = {
-      if (lista.length == 0) false
+      if (lista.isEmpty) false
       else if (lista.head == elemento) true
       else estaEnLista(lista.tail, elemento)
     }
@@ -207,14 +207,14 @@ object Clase2 {
    * Dada una lista de enteros retorna una lista con todas las posibles subconjuntos
    * Por ejemplo : (1,2,3) -> ((),(1),(2),(3),(1,2),(1,3), (1,2,3), (2,3))
   ********************************/
-  def subSets(lista: List[Int]): List[List[Int]] = ???
-  //   def auxSubSets(xs: List[Int], nueva: List[List[Int]]): List[List[Int]] = {
-  //     if (xs.isEmpty) nueva
-  //     else auxSubSets(xs.tail, (nueva ++ transformar(nueva, (e: Int) => e :: xs.head)))
-  //   }
-  //   if (lista.length == 0) Nil
-  //   else auxSubSets(lista, List(Nil))
-  // }
+  def subSets(lista: List[Int]): List[List[Int]] = {
+    def auxSubSets(xs: List[Int], nueva: List[List[Int]]): List[List[Int]] = {
+      if (xs.isEmpty) nueva
+      else auxSubSets(xs.tail, (nueva ++ nueva.map(e => e :+ xs.head)))
+    }
+    if (lista.isEmpty) Nil
+    else auxSubSets(lista, List(Nil))
+  }
 
   def cortar(lista: List[Int], n: Int): List[List[Int]] = {
     def auxCortar(pos: Int, actual: List[Int], nueva: List[List[Int]]): List[List[Int]] = {
