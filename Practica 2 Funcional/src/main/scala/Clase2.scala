@@ -35,16 +35,22 @@ object Clase2 {
   }
 
   // Ordena los valores de una lista utilizando quicksort
+
   def QuickSort(xs: List[Int]): List[Int] = {
-    def auxSort(min: List[Int], max: List[Int], medio: Int, pos: Int): List[Int] = {
-      if (pos >= xs.length) QuickSort(min) ++ (medio :: QuickSort(max))
-      else if (xs(pos) >= medio) auxSort(min, max :+ xs(pos), medio, pos + 1)
-      else auxSort(min :+ xs(pos), max, medio, pos + 1)
-    }
-    if (xs.isEmpty) Nil
-    else if (xs.length == 1) xs
-    else auxSort(Nil, Nil, xs(0), 1)
+    if(xs.length < 2) xs
+    else minimos(xs.tail, xs.head) ++ (xs.tail ++ maximos(xs.tail, xs.head))
   }
+  //Homenaje a mi primer quicksort en scala
+  // def QuickSort(xs: List[Int]): List[Int] = {
+  //   def auxSort(min: List[Int], max: List[Int], medio: Int, pos: Int): List[Int] = {
+  //     if (pos >= xs.length) QuickSort(min) ++ (medio :: QuickSort(max))
+  //     else if (xs(pos) >= medio) auxSort(min, max :+ xs(pos), medio, pos + 1)
+  //     else auxSort(min :+ xs(pos), max, medio, pos + 1)
+  //   }
+  //   if (xs.isEmpty) Nil
+  //   else if (xs.length == 1) xs
+  //   else auxSort(Nil, Nil, xs(0), 1)
+  // }
 
   /**Obtiene un elemento en la posición n */
   def ObtenerElemento(lista: List[Int], posicion: Int): Int = {
