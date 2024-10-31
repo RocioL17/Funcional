@@ -26,6 +26,14 @@ class Clase2Suite extends munit.FunSuite  {
     assert(min(List(1, 2, 3, 4, 1, 2, 3, 4)) == 1)
   }
 
+  test("MAXIMOS") {
+    assert(maximos(List(1, 2, 35, 78, 5, 1, 4, 31, 10, 15, 19, 22), 9) == List(35, 78, 31, 10, 15, 19, 22))
+  }
+
+  test("MINIMOS") {
+    assert(minimos(List(1, 2, 35, 78, 5, 1, 4, 31, 10, 15, 19, 22), 10) == List(1, 2, 5, 1, 4))
+  }
+
   test("mediana 1,2,3,4,5 es 3") {
     assert(mediana(List(1, 2, 3, 4, 5)) == 3)
   }
@@ -127,7 +135,7 @@ class Clase2Suite extends munit.FunSuite  {
   }
 
   test("subSets (1,2) debe ser ((),(1,2),(1),(2))") {
-    assert(Set(subSets(List(1, 2))) == Set(Nil,List(1), List(2), List(1,2)))
+    assert(subSets(List(1, 2)).toSet == Set(Nil,List(1), List(2), List(1,2)))
   }
 
   test("cortar () de n retorna Nil") {
